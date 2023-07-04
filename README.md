@@ -11,7 +11,10 @@ A simple desktop application for monitoring Wi-Fi sensors.
 * Save detected datas and check them later via line charts, bar charts or .csv files
 * Operate on an inventory in tabular form
 * And others more...
-  
+ 
+# Core idea
+![flow drawio](https://github.com/foughtmoss/SensorMonitor/assets/136918608/e4ebd118-0044-4d4f-9c72-c506749fb419)
+
 # Screenshots
 Navigate the inventory and select the needed sensor by clicking on it. You can open its Sensor Form by double clicking the selected row, or you can remove it by right clicking the selected row and then choosing the remove option.
 You can search a sensor by entering its IP address, or order all the sensors by type or location.
