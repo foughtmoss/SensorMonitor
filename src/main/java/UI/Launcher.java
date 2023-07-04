@@ -20,10 +20,13 @@ public class Launcher {
     private JMenu inventory;
     private JMenuItem addSensorItem;
     private JMenuItem seeInventory;
-
+    private ImageIcon icon;
     public Launcher() {
 
-        this.frame=new JFrame("WaterQuality");
+        icon=new ImageIcon("images/appIcon");
+
+        this.frame=new JFrame("SensorMonitor");
+        this.frame.setIconImage(icon.getImage());
         this.frame.setResizable(true);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
