@@ -72,10 +72,6 @@ public class WiFi implements MyConnection,Runnable {
     }
 
     @Override
-    public void write() {
-
-    }
-    @Override
     public void run() {
         read();
     }
