@@ -41,3 +41,6 @@ Add new sensors and save their details in the database. Currently you can select
 
 # License
 This software is licensed under MIT License.
+
+# Contributors
+Any contributors are welcome!
