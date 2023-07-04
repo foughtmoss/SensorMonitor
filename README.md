@@ -18,7 +18,7 @@ You can search a sensor by entering its IP address, or order all the sensors by 
 
 ![inventory](https://github.com/foughtmoss/SensorMonitor/assets/136918608/931a8cd5-b53f-4409-8589-a07c6966b6ef)
 
-Establish a Wi-Fi connection with the sensor, set up new alarms and delete the old ones from the chart, contact automatically the designated operator via email, keep track of the sensors you are working with during the session, reload the Sensor Form by clicking on its label in the SensorList panel, and save data.
+Establish a Wi-Fi connection with the sensor, set up new alarms and delete the old ones from the chart, contact automatically the designated operator via email, keep track of the sensors you are working with during the session, reload the Sensor Form by clicking on its label in the SensorList panel, switch Form, and save data.
 
 ![total](https://github.com/foughtmoss/SensorMonitor/assets/136918608/5158aff2-50d1-4f36-8892-2b190f456ca1)
 
