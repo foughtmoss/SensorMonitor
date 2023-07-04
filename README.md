@@ -38,7 +38,7 @@ Analyze previous charts selecting the detection date and the type of chart.
 
 Add new sensors and save their details in the database. Currently you can select one of three different type of sensors (ph sensor, Temperature sensor, Chlorine sensor).
 
-![addSensor](https://github.com/foughtmoss/SensorMonitor/assets/136918608/358e9d9f-852e-4e73-b06e-741dfeecf5e0)
+![addSensor](https://github.com/foughtmoss/SensorMonitor/assets/136918608/067c917d-2494-4315-94eb-37829310ab01)
 
 # License
 This software is licensed under MIT License.
