@@ -4,7 +4,7 @@ A simple desktop application for monitoring WiFi sensors.
 # Features
 * Add new sensors 
 * Select a sensor and establish a connection via the application
-* Examine the real-time chart and set alarms
+* Examine the real-time chart and set up new alarms
 * Contact automatically the designated operator via email
 * Save detected datas and check them later via line charts, bar charts or .csv files
 * Operate on an inventory in tabular form
