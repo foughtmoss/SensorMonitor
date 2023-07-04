@@ -25,17 +25,6 @@ public class MyJDBC {
             e.printStackTrace();
         }
     }
-    public void getSensorInformation(Sensor sensor){
-        try {
-            Statement statement= connection.createStatement();
-            ResultSet resultSet=statement.executeQuery("");
-            while(resultSet.next()){
-                System.out.println(resultSet.getString("ipAddress"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public LinkedHashMap<String,Double> getDataFromDate(Sensor sensor, String date) {
         LinkedHashMap<String,Double> map=new LinkedHashMap<>();
