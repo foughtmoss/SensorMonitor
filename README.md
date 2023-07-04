@@ -10,7 +10,7 @@ A simple desktop application for monitoring Wi-Fi sensors.
 * Contact automatically the designated operator via email
 * Save detected datas and check them later via line charts, bar charts or .csv files
 * Operate on an inventory in tabular form
-* And others more
+* And others more...
   
 # Screenshots
 Navigate the inventory and select the needed sensor by clicking on it. You can open its Sensor Form by double clicking the selected row, or you can remove it by right clicking the selected row and then choosing the remove option.
