@@ -16,7 +16,6 @@ import java.util.ArrayList;
 /**
  * Include sensors in a table
  */
-
 public class Inventory extends JPanel {
     private ArrayList<Sensor> sensors;
     private MyJDBC myJDBC;

@@ -29,6 +29,7 @@ import java.util.LinkedHashSet;
 /**
  * Search for the specifications of a sensor, included previous chart and files
  */
+
 public class HistoryForm extends JPanel {
     private Sensor sensor;
     private ArrayList<String> fileList;

@@ -5,9 +5,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 /**
  * Manage some user actions
  */
+
 public class SensorLabelMouseListener extends MouseAdapter {
 
     private Sensor sensor;

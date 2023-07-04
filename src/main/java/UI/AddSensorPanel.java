@@ -25,6 +25,7 @@ public class AddSensorPanel extends JPanel {
     /**
      * Panel for adding new sensors
     */
+
     public AddSensorPanel(SensorListPanel sensorListPanel) {
         this.sensorListPanel = sensorListPanel;
         setLayout(new BorderLayout());

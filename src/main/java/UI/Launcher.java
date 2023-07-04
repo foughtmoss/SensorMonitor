@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Start the application
+ */
+
 public class Launcher {
 
     private SensorListPanel sensorListPanel;
@@ -16,10 +20,6 @@ public class Launcher {
     private JMenu inventory;
     private JMenuItem addSensorItem;
     private JMenuItem seeInventory;
-
-    /**
-     * Start the application
-     */
 
     public Launcher() {
 

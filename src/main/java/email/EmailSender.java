@@ -1,3 +1,6 @@
+/**
+ * using GmailAPI
+ */
 package email;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -29,6 +32,7 @@ import java.util.Set;
 /**
  * Send email
  */
+
 public class EmailSender {
     private static String TEST_EMAIL="sensormonitorprojectoop@gmail.com";
     private final Gmail service;

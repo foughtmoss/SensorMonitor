@@ -3,6 +3,7 @@ package data;
 /**
  * Interpret data
  */
+
 public class SensorData {
 
     double ph;

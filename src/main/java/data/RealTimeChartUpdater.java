@@ -9,6 +9,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 /**
  * Update the real-time chart
  */
+
 public class RealTimeChartUpdater implements Runnable{
     private ChartPanel chartPanel;
     private SensorData sensorData;

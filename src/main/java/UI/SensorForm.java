@@ -30,6 +30,7 @@ import java.util.LinkedHashMap;
 /**
  * Represent the form of a sensor
  */
+
 public class SensorForm extends JPanel implements Observer{
     private JButton connectButton;
     private JButton disconnectButton;

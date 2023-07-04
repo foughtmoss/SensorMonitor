@@ -8,9 +8,11 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
+
 /**
  * Manage sensors you are working with
  */
+
 public class SensorListPanel extends JPanel {
     private ArrayList<Sensor> sensorList;
     private JPanel sensorPanel;

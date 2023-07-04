@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Establish a Wi-Fi connection and operate on it
  */
+
 public class WiFi implements MyConnection,Runnable {
 
     private Socket socket;

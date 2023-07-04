@@ -10,6 +10,7 @@ import java.util.*;
 /**
  * Establish a connection with the database and operate on it
  */
+
 public class MyJDBC {
 
     private static Connection connection;
