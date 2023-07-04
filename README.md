@@ -1,4 +1,5 @@
 # Sensor_Monitor
+![appIcon](https://github.com/foughtmoss/SensorMonitor/assets/136918608/b4e054ae-32d5-4b76-b83c-355cf7f5351f)
 A simple desktop application for monitoring WiFi sensors.
 
 # Features
