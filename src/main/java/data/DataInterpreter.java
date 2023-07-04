@@ -1,5 +1,5 @@
 package data;
 
 public interface DataInterpreter {
-    public void interpretData(String Data);
+     void interpretData(String Data);
 }
