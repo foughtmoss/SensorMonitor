@@ -32,8 +32,9 @@ public class WiFi implements MyConnection,Runnable {
         try {
             socket.close();
             isConnected=false;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            String errorMessage = "An error occurred while trying to close the connection: " + e.getMessage();
+            JOptionPane.showMessageDialog(null, errorMessage, "Connection Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
