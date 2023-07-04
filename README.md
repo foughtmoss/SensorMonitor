@@ -1,5 +1,7 @@
 # Sensor_Monitor
-A simple desktop application for monitoring WiFi sensors.
+<img src="https://github.com/foughtmoss/SensorMonitor/assets/136918608/b4e054ae-32d5-4b76-b83c-355cf7f5351f" alt="App Icon" width="200" height="200">
+
+A simple desktop application for monitoring Wi-Fi sensors.
 
 # Features
 * Add new sensors 
@@ -16,11 +18,11 @@ You can search a sensor by entering its IP address, or order all the sensors by 
 
 ![inventory](https://github.com/foughtmoss/SensorMonitor/assets/136918608/6a1e877c-66b8-4adf-a119-de5abac90823)
 
-Establish a WiFi connection with the sensor, set up new alarms and delete the old ones from the chart, contact automatically the designated operator via email, keep track of the sensors you are working with during the session, reload the Sensor Form by clicking on its label in the SensorList panel, and save data.
+Establish a Wi-Fi connection with the sensor, set up new alarms and delete the old ones from the chart, contact automatically the designated operator via email, keep track of the sensors you are working with during the session, reload the Sensor Form by clicking on its label in the SensorList panel, and save data.
 
 ![total](https://github.com/foughtmoss/SensorMonitor/assets/136918608/7de54920-542e-4867-bc1a-42a72d0cd3d1)
 
-Every time the application is connected to a sensor via WiFi you must close the connection before switching to another Form or reloading the current one.
+Every time the application is connected to a sensor via Wi-Fi you must close the connection before switching to another Form or reloading the current one.
 
 ![errormessage](https://github.com/foughtmoss/SensorMonitor/assets/136918608/6ede930e-5833-4f2f-be29-577dbbe3f1ce)
 
@@ -39,3 +41,6 @@ Add new sensors and save their details in the database. Currently you can select
 
 # License
 This software is licensed under MIT License.
+
+# Contributors
+Any contributors are welcome!
