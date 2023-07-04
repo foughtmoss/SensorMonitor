@@ -1,9 +1,11 @@
 package data;
 
 import com.google.gson.Gson;
-
 import java.util.List;
 
+/**
+ * Interpret data
+ */
 public class JSONDataInterpreter implements DataInterpreter{
     private List<Observer> observers;
 

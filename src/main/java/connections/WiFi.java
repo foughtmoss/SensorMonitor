@@ -4,7 +4,6 @@ import data.DataInterpreter;
 import data.JSONDataInterpreter;
 import data.Observer;
 import data.Sensor;
-
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +12,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Establish a Wi-Fi connection and operate on it
+ */
 public class WiFi implements MyConnection,Runnable {
 
     private Socket socket;
@@ -23,7 +25,6 @@ public class WiFi implements MyConnection,Runnable {
     public WiFi(Sensor sensor) {
         this.sensor=sensor;
     }
-
 
     @Override
     public void disconnect() {
@@ -52,7 +53,6 @@ public class WiFi implements MyConnection,Runnable {
             }
         }
     }
-
 
     @Override
     public void connect() {

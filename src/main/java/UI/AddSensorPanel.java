@@ -3,7 +3,6 @@ package UI;
 import data.Sensor;
 import database.MyJDBC;
 import file.SensorFile;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +22,9 @@ public class AddSensorPanel extends JPanel {
     private JButton saveButton;
     private SensorListPanel sensorListPanel;
 
+    /**
+     * Panel for adding new sensors
+    */
     public AddSensorPanel(SensorListPanel sensorListPanel) {
         this.sensorListPanel = sensorListPanel;
         setLayout(new BorderLayout());
@@ -47,7 +49,7 @@ public class AddSensorPanel extends JPanel {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Controlla se tutti i campi sono stati inseriti
+
                 if (ipAddressField.getText().isEmpty() || portField.getText().isEmpty() ||
                         operatorEmailField.getText().isEmpty() || locationField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(AddSensorPanel.this,
@@ -84,7 +86,6 @@ public class AddSensorPanel extends JPanel {
                 myJDBC.addSensor(sensor);
                 myJDBC.closeDBConnection();
 
-                //aggiunta del sensore alla directory sensors
                 new SensorFile().createDirectory(sensor);
 
                 //pulisci i campi
@@ -95,7 +96,6 @@ public class AddSensorPanel extends JPanel {
             }
         });
 
-        // Pannello per i campi di input
         JPanel inputPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -103,7 +103,6 @@ public class AddSensorPanel extends JPanel {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(5, 5, 5, 5);
 
-        // Aggiungi i componenti al pannello di input
         inputPanel.add(ipAddressLabel, gbc);
         inputPanel.add(ipAddressField, gbc);
         inputPanel.add(portLabel, gbc);
@@ -115,7 +114,6 @@ public class AddSensorPanel extends JPanel {
         inputPanel.add(locationLabel, gbc);
         inputPanel.add(locationField, gbc);
 
-        // Aggiungi il pulsante Save
         gbc.gridx = 0;
         gbc.gridy = GridBagConstraints.RELATIVE;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -123,7 +121,6 @@ public class AddSensorPanel extends JPanel {
         gbc.insets = new Insets(10, 0, 0, 0);
         inputPanel.add(saveButton, gbc);
 
-        // Aggiungi i pannelli al pannello principale
         add(inputPanel, BorderLayout.CENTER);
     }
 }

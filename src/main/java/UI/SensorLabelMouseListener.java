@@ -1,12 +1,13 @@
 package UI;
 
 import data.Sensor;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+/**
+ * Manage some user actions
+ */
 public class SensorLabelMouseListener extends MouseAdapter {
 
     private Sensor sensor;
@@ -30,11 +31,8 @@ public class SensorLabelMouseListener extends MouseAdapter {
         Component component1 = sensorFormPanel.getComponent(0);
         if (component1 instanceof SensorForm) {
             SensorForm sensorForm = (SensorForm) component1;
-            // Ora puoi accedere ai metodi e alle proprietà di SensorForm tramite la variabile sensorForm
-            if (sensorForm.isConnected()) {
-                // La connessione WiFi è ancora aperta
-                // Informa l'utente e chiedi se vuole chiuderla
 
+            if (sensorForm.isConnected()) {
                 int option = JOptionPane.showConfirmDialog(
                         sensorForm,
                         "The WiFi connection is still open. Do you want to close it and proceed with this operation?",
@@ -43,21 +41,16 @@ public class SensorLabelMouseListener extends MouseAdapter {
                 );
 
                 if (option == JOptionPane.YES_OPTION) {
-                    // L'utente ha scelto di chiudere la connessione WiFi
                     sensorForm.getWiFi().disconnect();
 
-                    // Esegui le altre operazioni qui
                 }else{
                     return;
                 }
             } else {
-                // La connessione è chiusa
             }
         } else {
-            // Il componente ottenuto non è di tipo SensorForm
         }
 
-        // Highlight the selected sensor
         if(SwingUtilities.isLeftMouseButton(e)) {
             Component[] components = sensorPanel.getComponents();
             for (Component component : components) {
@@ -71,7 +64,6 @@ public class SensorLabelMouseListener extends MouseAdapter {
                 }
             }
 
-            // Show the sensor form panel for the selected sensor
             sensorFormPanel.removeAll();
             sensorFormPanel.add(new SensorForm(sensor));
             sensorFormPanel.revalidate();
@@ -85,13 +77,11 @@ public class SensorLabelMouseListener extends MouseAdapter {
     }
     @Override
     public void mouseEntered(MouseEvent e) {
-        // Change the background color of the label when the mouse enters
-        ((JLabel) e.getSource()).setBackground(new Color(230, 230, 230));
+        ((JLabel) e.getSource()).setBackground(Color.CYAN);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // Change the background color of the label when the mouse exits
         ((JLabel) e.getSource()).setBackground(Color.WHITE);
     }
 

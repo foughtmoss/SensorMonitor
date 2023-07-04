@@ -2,7 +2,6 @@ package UI;
 
 import data.Sensor;
 import database.MyJDBC;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +12,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+
+/**
+ * Include sensors in a table
+ */
 
 public class Inventory extends JPanel {
     private ArrayList<Sensor> sensors;
@@ -88,10 +91,9 @@ public class Inventory extends JPanel {
                 int row = target.getSelectedRow();
 
                 if (row != -1) {
-                    // Ottenere l'indirizzo IP selezionato
+
                     String ipAddress = (String) target.getValueAt(row, 0);
 
-                    // Trova il sensore corrispondente all'indirizzo IP selezionato
                     Sensor selectedSensor = null;
                     for (Sensor sensor : sensors) {
                         if (sensor.getIpAddress().equals(ipAddress)) {
@@ -100,8 +102,7 @@ public class Inventory extends JPanel {
                         }
                     }
 
-                    if (e.getClickCount() == 2 && ipAddress != null) {  // Controllo per un doppio clic
-                        // Aprire il SensorForm con il sensore selezionato
+                    if (e.getClickCount() == 2 && ipAddress != null) {
                         sensorFormPanel.removeAll();
                         sensorFormPanel.add(new SensorForm(selectedSensor));
                         sensorFormPanel.revalidate();
@@ -244,18 +245,13 @@ public class Inventory extends JPanel {
 
         File[] files;
 
-        // Percorso della directory del sensore
         String sensorDirectoryPath = "sensors/"+ipAddress;
 
-        // Creazione dell'oggetto File per la directory del sensore
         File sensorDirectory = new File(sensorDirectoryPath);
 
-        // Verifica se la directory esiste ed è una directory
         if (sensorDirectory.exists() && sensorDirectory.isDirectory()) {
-            // Recupera l'elenco dei file nella directory del sensore
             files = sensorDirectory.listFiles();
 
-            // Aggiungi i nomi dei file alla lista
             for (File file : files) {
                 if(file.delete()){
                     System.out.println("file deleted successfully");

@@ -2,12 +2,14 @@ package database;
 
 import data.Sensor;
 import org.jfree.data.time.Millisecond;
-
 import java.sql.Date;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Establish a connection with the database and operate on it
+ */
 public class MyJDBC {
 
     private static Connection connection;

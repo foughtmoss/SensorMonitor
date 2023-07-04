@@ -26,6 +26,9 @@ import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.Set;
 
+/**
+ * Send email
+ */
 public class EmailSender {
     private static String TEST_EMAIL="sensormonitorprojectoop@gmail.com";
     private final Gmail service;

@@ -1,7 +1,6 @@
 package file;
 
 import data.Sensor;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -9,6 +8,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Operate on directory and files
+ */
 public class SensorFile {
     public void createDirectory(Sensor sensor){
         File sensorFolder=new File("sensors");

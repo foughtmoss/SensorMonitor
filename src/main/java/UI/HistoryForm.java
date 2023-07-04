@@ -10,7 +10,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +26,10 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
-public class HistoricalForm extends JPanel {
+/**
+ * Search for the specifications of a sensor, included previous chart and files
+ */
+public class HistoryForm extends JPanel {
     private Sensor sensor;
     private ArrayList<String> fileList;
     private JPanel fileListPanel;
@@ -35,7 +37,7 @@ public class HistoricalForm extends JPanel {
     private JPanel contentPanel;
     private MyJDBC myJDBC;
 
-    public HistoricalForm(Sensor sensor, ArrayList<String> fileList) {
+    public HistoryForm(Sensor sensor, ArrayList<String> fileList) {
         this.sensor = sensor;
         this.fileList = fileList;
 
@@ -151,7 +153,6 @@ public class HistoricalForm extends JPanel {
             int endIndex = fileName.indexOf("_", startIndex); // Trova l'indice del secondo underscore a partire dall'indice precedente
             String dateOfDetectionStr = fileName.substring(startIndex, endIndex); // Estrai la porzione del nome del file contenente la data di rilevazione
 
-            // Formatta la data nel formato desiderato
             SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyyMMdd");
             SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String formattedDateOfDetection = "";
@@ -168,7 +169,6 @@ public class HistoricalForm extends JPanel {
         JScrollPane scrollPane = new JScrollPane(fileListTable);
         tableWrapperPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Personalizza l'aspetto dell'intestazione della tabella
         JTableHeader header = fileListTable.getTableHeader();
         header.setBackground(Color.WHITE);
         header.setForeground(Color.BLACK);
@@ -285,63 +285,57 @@ public class HistoricalForm extends JPanel {
         JFreeChart chart = null;
 
         if (selectedChartType.equals("Line Chart")) {
-            // Crea un dataset utilizzando la serie
+
             TimeSeriesCollection dataset = new TimeSeriesCollection();
             TimeSeries series = new TimeSeries(sensor.getType());
 
-            // Aggiungi i dati alla serie
             for (String millisecondStr : dataMap.keySet()) {
                 double dataValue = dataMap.get(millisecondStr);
 
-                // Converti la stringa del millisecondo in oggetto Date
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
                 Date millisecondDate;
                 try {
                     millisecondDate = dateFormat.parse(millisecondStr);
                 } catch (ParseException e) {
                     e.printStackTrace();
-                    continue; // Salta l'iterazione corrente in caso di errore di parsing
+                    continue;
                 }
 
-                // Converti l'oggetto Date in oggetto Millisecond
                 Millisecond millisecond = new Millisecond(millisecondDate);
-
-                // Aggiungi il valore alla serie
                 series.add(millisecond, dataValue);
             }
 
             dataset.addSeries(series);
-            // Crea il grafico a linea
+
             chart = ChartFactory.createTimeSeriesChart(
-                    "Line chart",  // Titolo del grafico
-                    "Millisecond",  // Etichetta asse x
-                    "Value",  // Etichetta asse y
+                    "Line chart",  // chart title
+                    "Millisecond",  // x label
+                    "Value",  // y label
                     dataset,  // Dataset
-                    true,  // Legenda
+                    true,  // legend
                     true,  // Tooltips
                     false  // URL
             );
         } else if (selectedChartType.equals("Bar Chart")) {
-            // Crea il dataset di categorie
+
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-            // Aggiungi i dati al dataset
             int counter = 1;
             for (String millisecondStr : dataMap.keySet()) {
                 double dataValue = dataMap.get(millisecondStr);
-                // Aggiungi il valore alla categoria "Valore" associata al millisecondo
+
                 dataset.addValue(dataValue, sensor.getType(), String.valueOf(counter));
                 counter++;
             }
 
             // Crea il grafico a barre
             chart = ChartFactory.createBarChart(
-                    "Bar chart",  // Titolo del grafico
-                    "Detection",  // Etichetta asse y
-                    "Value",  // Etichetta asse x
-                    dataset,  // Dataset di categorie
-                    PlotOrientation.VERTICAL,  // Orientamento delle barre (verticale)
-                    true,  // Legenda
+                    "Bar chart",  // chart title
+                    "Detection",  // y label
+                    "Value",  // x label
+                    dataset,  // Dataset
+                    PlotOrientation.VERTICAL,  // vertical orientation
+                    true,  // Legend
                     true,  // Tooltips
                     false  // URL
             );

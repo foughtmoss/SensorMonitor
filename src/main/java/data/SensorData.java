@@ -1,11 +1,13 @@
 package data;
 
+/**
+ * Interpret data
+ */
 public class SensorData {
 
     double ph;
     double temperature;
     double chlorine;
-
 
     public synchronized double getPh() {
         return ph;
@@ -18,7 +20,6 @@ public class SensorData {
     public double getChlorine() {
         return chlorine;
     }
-
 
     @Override
     public String toString() {

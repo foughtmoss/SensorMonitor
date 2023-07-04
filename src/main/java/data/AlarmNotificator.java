@@ -2,6 +2,9 @@ package data;
 
 import UI.SensorForm;
 
+/**
+ * Create alarm messages
+ */
 public class AlarmNotificator implements Observer{
     double maxValue;
     double minValue;

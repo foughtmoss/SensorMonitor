@@ -6,6 +6,9 @@ import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
+/**
+ * Update the real-time chart
+ */
 public class RealTimeChartUpdater implements Runnable{
     private ChartPanel chartPanel;
     private SensorData sensorData;
@@ -30,7 +33,6 @@ public class RealTimeChartUpdater implements Runnable{
                 series.addOrUpdate(new Millisecond(), sensorData.getChlorine());
             }
         }
-
         chartPanel.repaint();
     }
 }

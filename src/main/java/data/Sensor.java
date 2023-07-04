@@ -1,5 +1,8 @@
 package data;
 
+/**
+ * Represent a sensor
+ */
 public class Sensor {
 
     private String ipAddress;
