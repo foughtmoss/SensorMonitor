@@ -12,7 +12,7 @@ A simple desktop application for monitoring Wi-Fi sensors.
 * Operate on an inventory in tabular form
 * And others more...
  
-# Core idea
+# Core
 ![flow drawio](https://github.com/foughtmoss/SensorMonitor/assets/136918608/e4ebd118-0044-4d4f-9c72-c506749fb419)
 
 # Screenshots
