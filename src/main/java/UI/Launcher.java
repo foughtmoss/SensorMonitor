@@ -23,7 +23,7 @@ public class Launcher {
     private ImageIcon icon;
     public Launcher() {
 
-        icon=new ImageIcon("images/appIcon");
+        icon=new ImageIcon("images/appIcon.png");
 
         this.frame=new JFrame("SensorMonitor");
         this.frame.setIconImage(icon.getImage());
