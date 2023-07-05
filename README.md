@@ -17,7 +17,7 @@ A simple desktop application for monitoring Wi-Fi sensors.
 
 # Screenshots
 Navigate the inventory and select the needed sensor by clicking on it. You can open its Sensor Form by double clicking the selected row, or you can remove it by right clicking the selected row and then choosing the remove option.
-You can search a sensor by entering its IP address, or order all the sensors by type or location.
+You can search a sensor by entering its IP address, or sort all the sensors by type or location.
 
 ![inventory](https://github.com/foughtmoss/SensorMonitor/assets/136918608/931a8cd5-b53f-4409-8589-a07c6966b6ef)
 
