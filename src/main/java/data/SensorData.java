@@ -24,12 +24,6 @@ public class SensorData {
 
     @Override
     public String toString() {
-        return "SensorData{" +
-                "ph=" + ph +
-                ", temperature=" + temperature +
-                ", chlorine=" + chlorine +
-                '}';
+        return "SensorData{" + "ph=" + ph + ", temperature=" + temperature + ", chlorine=" + chlorine + '}';
     }
-
-
 }

@@ -2,6 +2,7 @@ package UI;
 
 import data.Sensor;
 import database.MyJDBC;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -115,7 +116,6 @@ public class Inventory extends JPanel {
                             sensorListPanel.revalidate();
                             sensorListPanel.repaint();
                         }
-
                     } else if (SwingUtilities.isRightMouseButton(e) && ipAddress != null) {
                         int selectedRow = table.getSelectedRow();
                         if (selectedRow != -1) {
@@ -146,19 +146,16 @@ public class Inventory extends JPanel {
                                         sensors.remove(removedSensor);
                                         sensorListPanel.removeSensor(removedSensor);//appena aggiunta
                                     }
-
                                     model.removeRow(selectedRow);
                                     addToPanel(scrollPane);
                                 }
                             });
-
                             contextMenu.show(table, e.getX(), e.getY());
                         }
                     }
                 }
             }
         });
-
         return table;
     }
 
@@ -183,9 +180,9 @@ public class Inventory extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedOption = (String) sortByComboBox.getSelectedItem();
-                if(selectedOption.equals("Type")){
+                if (selectedOption.equals("Type")) {
                     sortBy("sensorType");
-                }else if(selectedOption.equals("Location")){
+                } else if (selectedOption.equals("Location")) {
                     sortBy("Location");
                 }
             }
@@ -240,11 +237,12 @@ public class Inventory extends JPanel {
 
         addToPanel(scrollPane);
     }
-    private void deleteSelectedSensorFiles(String ipAddress){
+
+    private void deleteSelectedSensorFiles(String ipAddress) {
 
         File[] files;
 
-        String sensorDirectoryPath = "sensors/"+ipAddress;
+        String sensorDirectoryPath = "sensors/" + ipAddress;
 
         File sensorDirectory = new File(sensorDirectoryPath);
 
@@ -252,15 +250,15 @@ public class Inventory extends JPanel {
             files = sensorDirectory.listFiles();
 
             for (File file : files) {
-                if(file.delete()){
+                if (file.delete()) {
                     System.out.println("file deleted successfully");
-                }else{
+                } else {
                     System.out.println("file could not be delete");
                 }
             }
-            if(sensorDirectory.delete()){
+            if (sensorDirectory.delete()) {
                 System.out.println("directory deleted successfully");
-            }else{
+            } else {
                 System.out.println("directory could not be delete");
             }
         }

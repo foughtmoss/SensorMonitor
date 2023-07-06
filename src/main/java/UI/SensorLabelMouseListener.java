@@ -1,6 +1,7 @@
 package UI;
 
 import data.Sensor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -12,20 +13,19 @@ import java.awt.event.MouseEvent;
 
 public class SensorLabelMouseListener extends MouseAdapter {
 
-    private Sensor sensor;
-    private JPanel sensorFormPanel;
-    private JPanel sensorPanel;
-    private JPopupMenu contextMenu;
-    private JLabel sensorLabel;
+    private final Sensor sensor;
+    private final JPanel sensorFormPanel;
+    private final JPanel sensorPanel;
+    private final JPopupMenu contextMenu;
+    private final JLabel sensorLabel;
 
-    public SensorLabelMouseListener(Sensor sensor, JPanel sensorFormPanel, JPanel sensorPanel,JPopupMenu contextMenu,JLabel sensorLabel) {
+    public SensorLabelMouseListener(Sensor sensor, JPanel sensorFormPanel, JPanel sensorPanel, JPopupMenu contextMenu, JLabel sensorLabel) {
         this.sensor = sensor;
         this.sensorFormPanel = sensorFormPanel;
         this.sensorPanel = sensorPanel;
-        this.contextMenu=contextMenu;
-        this.sensorLabel=sensorLabel;
+        this.contextMenu = contextMenu;
+        this.sensorLabel = sensorLabel;
     }
-
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -35,17 +35,11 @@ public class SensorLabelMouseListener extends MouseAdapter {
             SensorForm sensorForm = (SensorForm) component1;
 
             if (sensorForm.isConnected()) {
-                int option = JOptionPane.showConfirmDialog(
-                        sensorForm,
-                        "The WiFi connection is still open. Do you want to close it and proceed with this operation?",
-                        "WiFi connection still open",
-                        JOptionPane.YES_NO_OPTION
-                );
+                int option = JOptionPane.showConfirmDialog(sensorForm, "The WiFi connection is still open. Do you want to close it and proceed with this operation?", "WiFi connection still open", JOptionPane.YES_NO_OPTION);
 
                 if (option == JOptionPane.YES_OPTION) {
                     sensorForm.getWiFi().disconnect();
-
-                }else{
+                } else {
                     return;
                 }
             } else {
@@ -53,7 +47,7 @@ public class SensorLabelMouseListener extends MouseAdapter {
         } else {
         }
 
-        if(SwingUtilities.isLeftMouseButton(e)) {
+        if (SwingUtilities.isLeftMouseButton(e)) {
             Component[] components = sensorPanel.getComponents();
             for (Component component : components) {
                 if (component instanceof JLabel) {
@@ -70,13 +64,13 @@ public class SensorLabelMouseListener extends MouseAdapter {
             sensorFormPanel.add(new SensorForm(sensor));
             sensorFormPanel.revalidate();
             sensorFormPanel.repaint();
-        }else{
-            if(SwingUtilities.isRightMouseButton(e)){
+        } else {
+            if (SwingUtilities.isRightMouseButton(e)) {
                 contextMenu.show(sensorLabel, e.getX(), e.getY());
             }
         }
-
     }
+
     @Override
     public void mouseEntered(MouseEvent e) {
         ((JLabel) e.getSource()).setBackground(Color.CYAN);
@@ -86,5 +80,4 @@ public class SensorLabelMouseListener extends MouseAdapter {
     public void mouseExited(MouseEvent e) {
         ((JLabel) e.getSource()).setBackground(Color.WHITE);
     }
-
 }

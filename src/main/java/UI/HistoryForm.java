@@ -10,6 +10,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -79,44 +80,17 @@ public class HistoryForm extends JPanel {
 
         Font labelFont = new Font("Arial", Font.BOLD, 20);
 
-        addSpecificationLabel(specificationPanel, "IP Address: " + sensor.getIpAddress(), labelFont,constraints);
+        addSpecificationLabel(specificationPanel, "IP Address: " + sensor.getIpAddress(), labelFont, constraints);
         constraints.gridy = 1;
-        addSpecificationLabel(specificationPanel, "Port: " + sensor.getPort(), labelFont,constraints);
+        addSpecificationLabel(specificationPanel, "Port: " + sensor.getPort(), labelFont, constraints);
         constraints.gridy = 2;
-        addSpecificationLabel(specificationPanel, "Type: " + sensor.getType(), labelFont,constraints);
+        addSpecificationLabel(specificationPanel, "Type: " + sensor.getType(), labelFont, constraints);
         constraints.gridy = 3;
-        addSpecificationLabel(specificationPanel, "Operator Email: " + sensor.getOperatorEmail(), labelFont,constraints);
+        addSpecificationLabel(specificationPanel, "Operator Email: " + sensor.getOperatorEmail(), labelFont, constraints);
         constraints.gridy = 4;
-        addSpecificationLabel(specificationPanel, "Location: " + sensor.getLocation(), labelFont,constraints);
+        addSpecificationLabel(specificationPanel, "Location: " + sensor.getLocation(), labelFont, constraints);
 
         return specificationPanel;
-    }
-
-    private void addSpecificationLabel(JPanel specificationPanel, String text, Font font,GridBagConstraints constraints) {
-        JLabel label = new JLabel(text);
-        label.setFont(font);
-        specificationPanel.add(label,constraints);
-    }
-
-    private JButton createIconButton(String imagePath) {
-        JButton button = new JButton();
-        button.setBackground(Color.WHITE);
-        ImageIcon icon = new ImageIcon(imagePath);
-        Image image = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        button.setIcon(new ImageIcon(image));
-        button.setBorderPainted(true);
-        button.setContentAreaFilled(false);
-        button.setFocusPainted(true);
-        button.setPreferredSize(new Dimension(50, 50));
-        return button;
-    }
-
-    private JPanel createButtonPanel(JButton sensorDirectoryButton, JButton sensorOldButton) {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        buttonPanel.add(sensorDirectoryButton);
-        buttonPanel.add(sensorOldButton);
-        return buttonPanel;
     }
 
     private JPanel createFilePanel() {
@@ -222,10 +196,10 @@ public class HistoryForm extends JPanel {
 
         JComboBox<String> dateComboBox = new JComboBox<>();
         myJDBC.setDBConnection();
-        LinkedHashSet<java.sql.Date>dateLinkedHashSet =myJDBC.getDateList(sensor);
+        LinkedHashSet<java.sql.Date> dateLinkedHashSet = myJDBC.getDateList(sensor);
         myJDBC.closeDBConnection();
 
-        for(java.sql.Date date:dateLinkedHashSet){
+        for (java.sql.Date date : dateLinkedHashSet) {
             dateComboBox.addItem(String.valueOf(date));
         }
 
@@ -254,6 +228,19 @@ public class HistoryForm extends JPanel {
         return infoPanel;
     }
 
+    private JButton createIconButton(String imagePath) {
+        JButton button = new JButton();
+        button.setBackground(Color.WHITE);
+        ImageIcon icon = new ImageIcon(imagePath);
+        Image image = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        button.setIcon(new ImageIcon(image));
+        button.setBorderPainted(true);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(true);
+        button.setPreferredSize(new Dimension(50, 50));
+        return button;
+    }
+
     private void showFileListPanel() {
         contentPanel.removeAll();
         contentPanel.add(fileListPanel, BorderLayout.CENTER);
@@ -266,6 +253,20 @@ public class HistoryForm extends JPanel {
         contentPanel.add(infoPanel, BorderLayout.CENTER);
         contentPanel.revalidate();
         contentPanel.repaint();
+    }
+
+    private JPanel createButtonPanel(JButton sensorDirectoryButton, JButton sensorOldButton) {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.add(sensorDirectoryButton);
+        buttonPanel.add(sensorOldButton);
+        return buttonPanel;
+    }
+
+    private void addSpecificationLabel(JPanel specificationPanel, String text, Font font, GridBagConstraints constraints) {
+        JLabel label = new JLabel(text);
+        label.setFont(font);
+        specificationPanel.add(label, constraints);
     }
 
     private void openFile(String fileName) {
@@ -308,8 +309,7 @@ public class HistoryForm extends JPanel {
 
             dataset.addSeries(series);
 
-            chart = ChartFactory.createTimeSeriesChart(
-                    "Line chart",  // chart title
+            chart = ChartFactory.createTimeSeriesChart("Line chart",  // chart title
                     "Millisecond",  // x label
                     "Value",  // y label
                     dataset,  // Dataset
@@ -330,8 +330,7 @@ public class HistoryForm extends JPanel {
             }
 
             // Crea il grafico a barre
-            chart = ChartFactory.createBarChart(
-                    "Bar chart",  // chart title
+            chart = ChartFactory.createBarChart("Bar chart",  // chart title
                     "Detection",  // y label
                     "Value",  // x label
                     dataset,  // Dataset

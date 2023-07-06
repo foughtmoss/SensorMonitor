@@ -18,6 +18,7 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 import org.apache.commons.codec.binary.Base64;
+
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -33,33 +34,25 @@ import java.util.Set;
  */
 
 public class EmailSender {
-    private static String TEST_EMAIL="sensormonitorprojectoop@gmail.com";
+    private static final String TEST_EMAIL = "sensormonitorprojectoop@gmail.com";
     private final Gmail service;
-    private String operatorEmail;
+    private final String operatorEmail;
 
     public EmailSender(String operatorEmail) throws Exception {
 
-        this.operatorEmail=operatorEmail;
+        this.operatorEmail = operatorEmail;
 
-        GsonFactory jsonFactory=GsonFactory.getDefaultInstance();
+        GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport,jsonFactory))
-                .setApplicationName("My First Project")
-                .build();
+        service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory)).setApplicationName("My First Project").build();
     }
 
-    private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory)
-            throws IOException, IOException {
+    private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException {
         // Load client secrets.
-        GoogleClientSecrets clientSecrets =
-                GoogleClientSecrets.load(jsonFactory, new InputStreamReader(EmailSender.class.getResourceAsStream("/insert_your_client_secret_here")));
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(EmailSender.class.getResourceAsStream("/insert_your_client_secret_here")));
 
         // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, jsonFactory, clientSecrets, Set.of(GmailScopes.GMAIL_SEND))
-                .setDataStoreFactory(new FileDataStoreFactory(Paths.get("tokens").toFile()))
-                .setAccessType("offline")
-                .build();
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory, clientSecrets, Set.of(GmailScopes.GMAIL_SEND)).setDataStoreFactory(new FileDataStoreFactory(Paths.get("tokens").toFile())).setAccessType("offline").build();
 
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");

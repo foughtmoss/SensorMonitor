@@ -11,48 +11,49 @@ import java.awt.event.ActionListener;
 
 public class Launcher {
 
-    private SensorListPanel sensorListPanel;
-    private JPanel sensorFormPanel;
-    private JPanel mainPanel;
-    private JFrame frame;
-    private JMenuBar menuBar;
-    private JMenu add;
-    private JMenu inventory;
-    private JMenuItem addSensorItem;
-    private JMenuItem seeInventory;
-    private ImageIcon icon;
+    private final SensorListPanel sensorListPanel;
+    private final JPanel sensorFormPanel;
+    private final JPanel mainPanel;
+    private final JFrame frame;
+    private final JMenuBar menuBar;
+    private final JMenu add;
+    private final JMenu inventory;
+    private final JMenuItem addSensorItem;
+    private final JMenuItem seeInventory;
+    private final ImageIcon icon;
+
     public Launcher() {
 
-        icon=new ImageIcon("images/appIcon.png");
+        icon = new ImageIcon("images/appIcon.png");
 
-        this.frame=new JFrame("SensorMonitor");
+        this.frame = new JFrame("SensorMonitor");
         this.frame.setIconImage(icon.getImage());
         this.frame.setResizable(true);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.mainPanel=new JPanel(new BorderLayout());
+        this.mainPanel = new JPanel(new BorderLayout());
 
-        sensorFormPanel=new JPanel();
+        sensorFormPanel = new JPanel();
         sensorFormPanel.setLayout(new BorderLayout());
         sensorFormPanel.setPreferredSize(new Dimension(200, 500));
 
-        sensorListPanel= new SensorListPanel(sensorFormPanel);
+        sensorListPanel = new SensorListPanel(sensorFormPanel);
 
-        sensorFormPanel.add(new Inventory(sensorFormPanel,sensorListPanel));
+        sensorFormPanel.add(new Inventory(sensorFormPanel, sensorListPanel));
 
-        this.menuBar=new JMenuBar();
-        this.add=new JMenu("Add");
-        this.addSensorItem=new JMenuItem("Sensor");
-        this.inventory=new JMenu("Inventory");
-        this.seeInventory=new JMenuItem("see Inventory");
+        this.menuBar = new JMenuBar();
+        this.add = new JMenu("Add");
+        this.addSensorItem = new JMenuItem("Sensor");
+        this.inventory = new JMenu("Inventory");
+        this.seeInventory = new JMenuItem("see Inventory");
         this.add.add(addSensorItem);
         this.inventory.add(seeInventory);
         this.menuBar.add(add);
         this.menuBar.add(inventory);
         this.frame.setJMenuBar(menuBar);
 
-        this.mainPanel.add(this.sensorListPanel,BorderLayout.WEST);
-        this.mainPanel.add(this.sensorFormPanel,BorderLayout.CENTER);
+        this.mainPanel.add(this.sensorListPanel, BorderLayout.WEST);
+        this.mainPanel.add(this.sensorFormPanel, BorderLayout.CENTER);
 
         seeInventory.addActionListener(new ActionListener() {
             @Override
@@ -61,17 +62,11 @@ public class Launcher {
                 if (component1 instanceof SensorForm) {
                     SensorForm sensorForm = (SensorForm) component1;
                     if (sensorForm.isConnected()) {
-                        int option = JOptionPane.showConfirmDialog(
-                                sensorForm,
-                                "The WiFi connection is still open. Do you want to close it and proceed with this operation?",
-                                "WiFi connection still open",
-                                JOptionPane.YES_NO_OPTION
-                        );
+                        int option = JOptionPane.showConfirmDialog(sensorForm, "The WiFi connection is still open. Do you want to close it and proceed with this operation?", "WiFi connection still open", JOptionPane.YES_NO_OPTION);
 
                         if (option == JOptionPane.YES_OPTION) {
                             sensorForm.getWiFi().disconnect();
-
-                        }else{
+                        } else {
                             return;
                         }
                     } else {
@@ -79,7 +74,7 @@ public class Launcher {
                 } else {
                 }
                 sensorFormPanel.removeAll();
-                sensorFormPanel.add(new Inventory(sensorFormPanel,sensorListPanel));
+                sensorFormPanel.add(new Inventory(sensorFormPanel, sensorListPanel));
                 sensorFormPanel.revalidate();
                 sensorFormPanel.repaint();
             }
@@ -93,17 +88,11 @@ public class Launcher {
                 if (component1 instanceof SensorForm) {
                     SensorForm sensorForm = (SensorForm) component1;
                     if (sensorForm.isConnected()) {
-                        int option = JOptionPane.showConfirmDialog(
-                                sensorForm,
-                                "The WiFi connection is still open. Do you want to close it and proceed with this operation?",
-                                "WiFi connection still open",
-                                JOptionPane.YES_NO_OPTION
-                        );
+                        int option = JOptionPane.showConfirmDialog(sensorForm, "The WiFi connection is still open. Do you want to close it and proceed with this operation?", "WiFi connection still open", JOptionPane.YES_NO_OPTION);
 
                         if (option == JOptionPane.YES_OPTION) {
                             sensorForm.getWiFi().disconnect();
-
-                        }else{
+                        } else {
                             return;
                         }
                     } else {
@@ -117,12 +106,10 @@ public class Launcher {
             }
         });
 
-
         frame.getContentPane().add(this.mainPanel);
         frame.pack();
         frame.setVisible(true);
         frame.setExtendedState(Frame.MAXIMIZED_BOTH);
-
     }
 
     public static void main(String[] args) {

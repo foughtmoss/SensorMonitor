@@ -32,6 +32,8 @@ import java.util.LinkedHashMap;
  */
 
 public class SensorForm extends JPanel implements Observer{
+    double minValue;
+    double maxValue;
     private JButton connectButton;
     private JButton disconnectButton;
     private JButton saveButton;
@@ -49,8 +51,6 @@ public class SensorForm extends JPanel implements Observer{
     private MyJDBC myJDBC;
     private boolean alarmIsOn=false;
     private boolean isConnected=false;
-    double minValue;
-    double maxValue;
 
 
     public SensorForm(Sensor sensor) {
@@ -190,76 +190,6 @@ public class SensorForm extends JPanel implements Observer{
         });
 
     }
-    public void update(SensorData sensorData) {
-        System.out.println("ricevuto update "+sensorData.getPh());
-        if(sensor.getType().equals("ph")){
-            detectedData.put(new Millisecond(),sensorData.getPh());
-            System.out.println(detectedData);
-        }else{
-            if(sensor.getType().equals("Temperature")){
-                detectedData.put(new Millisecond(),sensorData.getTemperature());
-                System.out.println(detectedData);
-            }else{
-                detectedData.put(new Millisecond(),sensorData.getChlorine());
-                System.out.println(detectedData);
-            }
-        }
-
-        RealTimeChartUpdater realTimeChartUpdater = new RealTimeChartUpdater(this.chartPanel, sensorData,sensor);
-        SwingUtilities.invokeLater(realTimeChartUpdater);
-
-    }
-    public void updateAlarms(String message) {
-        JLabel messageLabel = new JLabel(message);
-        JCheckBox contactOperatorCheckBox = new JCheckBox("Contact operator");
-
-        JPanel messageBox = new JPanel();
-        messageBox.setLayout(new FlowLayout(FlowLayout.LEFT));
-        Border border = BorderFactory.createLineBorder(Color.BLACK);
-        messageBox.setPreferredSize(new Dimension(350, 50));
-        messageBox.setOpaque(false);
-        messageBox.setBorder(border);
-        messageBox.add(contactOperatorCheckBox);
-        messageBox.add(messageLabel);
-
-        messageBox.setMaximumSize(messageBox.getPreferredSize());
-
-        messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
-
-        int verticalSpacing = 10;
-        messagePanel.add(messageBox);
-        messagePanel.add(Box.createVerticalStrut(verticalSpacing));
-
-        contactOperatorCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (contactOperatorCheckBox.isSelected()) {
-                    Thread operationThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                new EmailSender(sensor.getOperatorEmail()).sendEmail("Alarm detected!",message);
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    });
-                    operationThread.start();
-                }
-            }
-        });
-
-        messagePanel.revalidate();
-        messagePanel.repaint();
-    }
-
-    public Sensor getSensor() {
-        return sensor;
-    }
-
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
-    }
 
     public StringBuilder createStringBuilder(boolean alarmIsOn, double minValue, double maxValue) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -316,13 +246,6 @@ public class SensorForm extends JPanel implements Observer{
         return stringBuilder;
     }
 
-    public boolean isConnected() {
-        return isConnected;
-    }
-
-    public WiFi getWiFi() {
-        return wiFi;
-    }
     private ArrayList<String> getSensorFiles(Sensor sensor) {
         ArrayList<String> fileList = new ArrayList<>();
 
@@ -338,5 +261,85 @@ public class SensorForm extends JPanel implements Observer{
             }
         }
         return fileList;
+    }
+
+    public void update(SensorData sensorData) {
+        System.out.println("ricevuto update "+sensorData.getPh());
+        if(sensor.getType().equals("ph")){
+            detectedData.put(new Millisecond(),sensorData.getPh());
+            System.out.println(detectedData);
+        }else{
+            if(sensor.getType().equals("Temperature")){
+                detectedData.put(new Millisecond(),sensorData.getTemperature());
+                System.out.println(detectedData);
+            }else{
+                detectedData.put(new Millisecond(),sensorData.getChlorine());
+                System.out.println(detectedData);
+            }
+        }
+
+        RealTimeChartUpdater realTimeChartUpdater = new RealTimeChartUpdater(this.chartPanel, sensorData,sensor);
+        SwingUtilities.invokeLater(realTimeChartUpdater);
+
+    }
+
+    public void updateAlarms(String message) {
+        JLabel messageLabel = new JLabel(message);
+        JCheckBox contactOperatorCheckBox = new JCheckBox("Contact operator");
+
+        JPanel messageBox = new JPanel();
+        messageBox.setLayout(new FlowLayout(FlowLayout.LEFT));
+        Border border = BorderFactory.createLineBorder(Color.BLACK);
+        messageBox.setPreferredSize(new Dimension(350, 50));
+        messageBox.setOpaque(false);
+        messageBox.setBorder(border);
+        messageBox.add(contactOperatorCheckBox);
+        messageBox.add(messageLabel);
+
+        messageBox.setMaximumSize(messageBox.getPreferredSize());
+
+        messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+
+        int verticalSpacing = 10;
+        messagePanel.add(messageBox);
+        messagePanel.add(Box.createVerticalStrut(verticalSpacing));
+
+        contactOperatorCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (contactOperatorCheckBox.isSelected()) {
+                    Thread operationThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                new EmailSender(sensor.getOperatorEmail()).sendEmail("Alarm detected!",message);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    });
+                    operationThread.start();
+                }
+            }
+        });
+
+        messagePanel.revalidate();
+        messagePanel.repaint();
+    }
+
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public WiFi getWiFi() {
+        return wiFi;
     }
 }

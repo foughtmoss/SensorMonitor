@@ -10,7 +10,6 @@ public class AlarmNotificator implements Observer{
     double maxValue;
     double minValue;
     Sensor sensor;
-
     private SensorForm sensorForm;
 
     public AlarmNotificator(Sensor sensor, double maxValue, double minValue,SensorForm sensorForm) {

@@ -8,21 +8,19 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
-
 /**
  * Manage sensors you are working with
  */
 
 public class SensorListPanel extends JPanel {
-    private ArrayList<Sensor> sensorList;
-    private JPanel sensorPanel;
-    private JPanel sensorFormPanel;
-
-    Font font=new Font("Poppins", Font.BOLD,12);
+    Font font = new Font("Poppins", Font.BOLD, 12);
+    private final ArrayList<Sensor> sensorList;
+    private final JPanel sensorPanel;
+    private final JPanel sensorFormPanel;
 
     public SensorListPanel(JPanel sensorFormPanel) {
 
-        this.sensorFormPanel=sensorFormPanel;
+        this.sensorFormPanel = sensorFormPanel;
 
         sensorList = new ArrayList<>();
         setLayout(new BorderLayout());
@@ -61,12 +59,36 @@ public class SensorListPanel extends JPanel {
 
         contextMenu.add(viewItem);
 
-        sensorLabel.addMouseListener(new SensorLabelMouseListener(sensor,sensorFormPanel, sensorPanel,contextMenu,sensorLabel));
+        sensorLabel.addMouseListener(new SensorLabelMouseListener(sensor, sensorFormPanel, sensorPanel, contextMenu, sensorLabel));
 
         sensorPanel.add(sensorLabel);
 
         sensorPanel.revalidate();
         sensorPanel.repaint();
+    }
+
+    public void viewSensorSpecification(Sensor sensor) {
+        sensorFormPanel.removeAll();
+        sensorFormPanel.add(new HistoryForm(sensor, getSensorFiles(sensor)));
+        sensorFormPanel.revalidate();
+        sensorFormPanel.repaint();
+    }
+
+    private ArrayList<String> getSensorFiles(Sensor sensor) {
+        ArrayList<String> fileList = new ArrayList<>();
+
+        String sensorDirectoryPath = "sensors/" + sensor.getIpAddress();
+
+        File sensorDirectory = new File(sensorDirectoryPath);
+
+        if (sensorDirectory.exists() && sensorDirectory.isDirectory()) {
+            File[] files = sensorDirectory.listFiles();
+
+            for (File file : files) {
+                fileList.add(file.getName());
+            }
+        }
+        return fileList;
     }
 
     public void removeSensor(Sensor sensor) {
@@ -94,13 +116,6 @@ public class SensorListPanel extends JPanel {
         }
     }
 
-    public void viewSensorSpecification(Sensor sensor){
-        sensorFormPanel.removeAll();
-        sensorFormPanel.add(new HistoryForm(sensor,getSensorFiles(sensor)));
-        sensorFormPanel.revalidate();
-        sensorFormPanel.repaint();
-    }
-
     public boolean isSensorDisplayed(Sensor sensor) {
         for (Component component : sensorPanel.getComponents()) {
             if (component instanceof JLabel) {
@@ -111,22 +126,6 @@ public class SensorListPanel extends JPanel {
             }
         }
         return false;
-    }
-    private ArrayList<String> getSensorFiles(Sensor sensor) {
-        ArrayList<String> fileList = new ArrayList<>();
-
-        String sensorDirectoryPath = "sensors/" + sensor.getIpAddress();
-
-        File sensorDirectory = new File(sensorDirectoryPath);
-
-        if (sensorDirectory.exists() && sensorDirectory.isDirectory()) {
-            File[] files = sensorDirectory.listFiles();
-
-            for (File file : files) {
-                fileList.add(file.getName());
-            }
-        }
-        return fileList;
     }
 }
 
