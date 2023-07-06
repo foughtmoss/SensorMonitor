@@ -20,7 +20,7 @@ public class MyJDBC {
 
     public void setDBConnection(){
         try {
-            connection= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/sensordb","root","XYZ.sensormonitorproject178");
+            connection= DriverManager.getConnection("url_user_and_password_here");
         }catch(SQLException e){
             e.printStackTrace();
         }
