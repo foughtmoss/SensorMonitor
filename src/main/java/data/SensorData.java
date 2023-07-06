@@ -10,7 +10,7 @@ public class SensorData {
     double temperature;
     double chlorine;
 
-    public synchronized double getPh() {
+    public double getPh() {
         return ph;
     }
 
