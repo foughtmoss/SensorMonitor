@@ -1,4 +1,4 @@
-package UI;
+package UI_operations;
 
 import connections.WiFi;
 import data.*;

@@ -1,4 +1,4 @@
-package UI;
+package UI_operations;
 
 import data.Sensor;
 import database.MyJDBC;

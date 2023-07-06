@@ -1,6 +1,6 @@
 package data;
 
-import UI.SensorForm;
+import UI_operations.SensorForm;
 
 /**
  * Create alarm messages
