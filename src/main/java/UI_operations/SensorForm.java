@@ -108,84 +108,72 @@ public class SensorForm extends JPanel implements Observer {
 
         add(scrollPane, BorderLayout.EAST);
 
-        setAlarmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (highValueField.getText().isEmpty() || lowValueField.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "If you want to set an alarm, you must insert all the critical values");
+        setAlarmButton.addActionListener(e -> {
+            if (highValueField.getText().isEmpty() || lowValueField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "If you want to set an alarm, you must insert all the critical values");
+            } else {
+                double newMaxValue = Double.parseDouble(highValueField.getText());
+                double newMinValue = Double.parseDouble(lowValueField.getText());
+                if (newMaxValue < newMinValue) {
+                    JOptionPane.showMessageDialog(null, "the maximum value must be greater than the minimum value");
                 } else {
-                    double newMaxValue = Double.parseDouble(highValueField.getText());
-                    double newMinValue = Double.parseDouble(lowValueField.getText());
-                    if (newMaxValue < newMinValue) {
-                        JOptionPane.showMessageDialog(null, "the maximum value must be greater than the minimum value");
-                    } else {
-                        if (alarmNotificator != null) {
-                            wiFi.removeObserver(alarmNotificator);
-                            alarmNotificator = null;
-                        }
-
-                        XYPlot plot = chart.getXYPlot();
-                        plot.clearRangeMarkers();
-
-                        Marker alarmMAXMarker = new ValueMarker(newMaxValue);
-                        Marker alarmMINMarker = new ValueMarker(newMinValue);
-                        alarmMAXMarker.setPaint(Color.BLUE);
-                        alarmMINMarker.setPaint(Color.BLUE);
-                        alarmMAXMarker.setStroke(new BasicStroke(2));
-                        alarmMINMarker.setStroke(new BasicStroke(2));
-                        plot.addRangeMarker(alarmMAXMarker);
-                        plot.addRangeMarker(alarmMINMarker);
-
-                        maxValue = newMaxValue;
-                        minValue = newMinValue;
-
-                        alarmNotificator = new AlarmNotificator(sensor, maxValue, minValue, SensorForm.this);
-                        wiFi.addObserver(alarmNotificator);
-
-                        alarmIsOn = true;
-
-                        highValueField.setText("");
-                        lowValueField.setText("");
+                    if (alarmNotificator != null) {
+                        wiFi.removeObserver(alarmNotificator);
+                        alarmNotificator = null;
                     }
+
+                    XYPlot plot1 = chart.getXYPlot();
+                    plot1.clearRangeMarkers();
+
+                    Marker alarmMAXMarker = new ValueMarker(newMaxValue);
+                    Marker alarmMINMarker = new ValueMarker(newMinValue);
+                    alarmMAXMarker.setPaint(Color.BLUE);
+                    alarmMINMarker.setPaint(Color.BLUE);
+                    alarmMAXMarker.setStroke(new BasicStroke(2));
+                    alarmMINMarker.setStroke(new BasicStroke(2));
+                    plot1.addRangeMarker(alarmMAXMarker);
+                    plot1.addRangeMarker(alarmMINMarker);
+
+                    maxValue = newMaxValue;
+                    minValue = newMinValue;
+
+                    alarmNotificator = new AlarmNotificator(sensor, maxValue, minValue, SensorForm.this);
+                    wiFi.addObserver(alarmNotificator);
+
+                    alarmIsOn = true;
+
+                    highValueField.setText("");
+                    lowValueField.setText("");
                 }
             }
         });
 
-        connectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    wiFi.addObserver(SensorForm.this);
-                    wiFi.connect();
-                    isConnected = wiFi.isConnected();
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(null, "Problems occurred while trying to set a connection to the sensor");
-                }
-            }
-        });
-
-        disconnectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                wiFi.disconnect();
+        connectButton.addActionListener(e -> {
+            try {
+                wiFi.addObserver(SensorForm.this);
+                wiFi.connect();
                 isConnected = wiFi.isConnected();
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, "Problems occurred while trying to set a connection to the sensor");
             }
         });
 
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        disconnectButton.addActionListener(e -> {
+            wiFi.disconnect();
+            isConnected = wiFi.isConnected();
+        });
 
-                if (!detectedData.isEmpty()) {
-                    myJDBC.setDBConnection();
-                    myJDBC.storeData(detectedData, sensor);
-                    myJDBC.closeDBConnection();
+        saveButton.addActionListener(e -> {
 
-                    SensorFile sensorFile = new SensorFile();
-                    sensorFile.createDirectory(sensor);
-                    StringBuilder stringBuilder = createStringBuilder(alarmIsOn, minValue, maxValue);
-                    sensorFile.saveToFile(sensor, stringBuilder);
-                }
+            if (!detectedData.isEmpty()) {
+                myJDBC.setDBConnection();
+                myJDBC.storeData(detectedData, sensor);
+                myJDBC.closeDBConnection();
+
+                SensorFile sensorFile = new SensorFile();
+                sensorFile.createDirectory(sensor);
+                StringBuilder stringBuilder = createStringBuilder(alarmIsOn, minValue, maxValue);
+                sensorFile.saveToFile(sensor, stringBuilder);
             }
         });
     }
@@ -302,22 +290,16 @@ public class SensorForm extends JPanel implements Observer {
         messagePanel.add(messageBox);
         messagePanel.add(Box.createVerticalStrut(verticalSpacing));
 
-        contactOperatorCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (contactOperatorCheckBox.isSelected()) {
-                    Thread operationThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                new EmailSender(sensor.getOperatorEmail()).sendEmail("Alarm detected!", message);
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    });
-                    operationThread.start();
-                }
+        contactOperatorCheckBox.addActionListener(e -> {
+            if (contactOperatorCheckBox.isSelected()) {
+                Thread operationThread = new Thread(() -> {
+                    try {
+                        new EmailSender(sensor.getOperatorEmail()).sendEmail("Alarm detected!", message);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+                operationThread.start();
             }
         });
 
