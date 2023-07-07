@@ -1,0 +1,62 @@
+/*
+ * Connects the ESP8266 NodeMCU board to wifi and prints the IP address.
+ * Accept a client and simulate a ph detection
+ * sending data to the client in JSON format.
+ */
+
+#include "ESP8266WiFi.h"
+
+// WiFi parameters to be configured
+const char* ssid = "router_username"; // Write here your router's username
+const char* password = "router_password"; // Write here your router's passward
+const int serverPort = 8888;
+WiFiServer server(serverPort);
+
+void setup(void)
+{ 
+  Serial.begin(9600);
+  // Connect to WiFi
+  WiFi.begin(ssid, password);
+
+  // while wifi not connected yet, print '.'
+  // then after it connected, get out of the loop
+  while (WiFi.status() != WL_CONNECTED) {
+     delay(500);
+     Serial.print(".");
+  }
+  //print a new line, then print WiFi connected and the IP address
+  Serial.println("");
+  Serial.println("WiFi connected");
+  // Print the IP address
+  Serial.println(WiFi.localIP());
+  startServer(serverPort);
+  
+}
+void loop() {
+  // prova
+WiFiClient client = server.available();
+  if (client) {
+    Serial.println("Client connected");
+    while (client.connected()) {
+      // Leggi i dati dal sensore del pH e formatta come JSON
+      double phValue; // Esempio di valore del pH
+      randomSeed(millis());
+      phValue = random(0,15);
+      
+      String jsonData = "{\"ph\": " + String(phValue) + "}";
+      Serial.println("detected data: "+jsonData);
+      // Invia i dati al client
+      client.println(jsonData);
+      client.flush();
+      
+      delay(1000); // Intervallo di lettura dei dati (1 secondo)
+    }
+    Serial.println("Client disconnected");
+  }
+ 
+}
+
+void startServer(int port){
+  server.begin();
+  Serial.println("Server started");
+}
