@@ -14,6 +14,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -31,35 +32,34 @@ import java.util.LinkedHashMap;
  * Represent the form of a sensor
  */
 
-public class SensorForm extends JPanel implements Observer{
+public class SensorForm extends JPanel implements Observer {
     double minValue;
     double maxValue;
-    private JButton connectButton;
-    private JButton disconnectButton;
-    private JButton saveButton;
-    private ChartPanel chartPanel;
-    private JLabel highValueLabel;
-    private JTextField highValueField;
-    private JLabel lowValueLabel;
-    private JTextField lowValueField;
-    private JButton setAlarmButton;
+    private final JButton connectButton;
+    private final JButton disconnectButton;
+    private final JButton saveButton;
+    private final ChartPanel chartPanel;
+    private final JLabel highValueLabel;
+    private final JTextField highValueField;
+    private final JLabel lowValueLabel;
+    private final JTextField lowValueField;
+    private final JButton setAlarmButton;
     private Sensor sensor;
-    private WiFi wiFi;
+    private final WiFi wiFi;
     private AlarmNotificator alarmNotificator;
-    private JPanel messagePanel;
-    private HashMap<Millisecond,Double> detectedData;
-    private MyJDBC myJDBC;
-    private boolean alarmIsOn=false;
-    private boolean isConnected=false;
-
+    private final JPanel messagePanel;
+    private final HashMap<Millisecond, Double> detectedData;
+    private final MyJDBC myJDBC;
+    private boolean alarmIsOn = false;
+    private boolean isConnected = false;
 
     public SensorForm(Sensor sensor) {
 
-        this.sensor=sensor;
-        wiFi=new WiFi(sensor);
-        myJDBC=new MyJDBC();
+        this.sensor = sensor;
+        wiFi = new WiFi(sensor);
+        myJDBC = new MyJDBC();
 
-        detectedData=new HashMap<>();
+        detectedData = new HashMap<>();
 
         setLayout(new BorderLayout());
 
@@ -69,14 +69,14 @@ public class SensorForm extends JPanel implements Observer{
         connectionPanel.add(connectButton);
         connectionPanel.add(disconnectButton);
 
-        saveButton=new JButton("Save");
+        saveButton = new JButton("Save");
         connectionPanel.add(saveButton);
 
         add(connectionPanel, BorderLayout.NORTH);
 
         TimeSeries series = new TimeSeries(sensor.getType());
         TimeSeriesCollection dataset = new TimeSeriesCollection(series);
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(" Sensor "+sensor.getIpAddress()+" Real-Time Chart", "Time", "Value", dataset);
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(" Sensor " + sensor.getIpAddress() + " Real-Time Chart", "Time", "Value", dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
@@ -116,34 +116,37 @@ public class SensorForm extends JPanel implements Observer{
                 } else {
                     double newMaxValue = Double.parseDouble(highValueField.getText());
                     double newMinValue = Double.parseDouble(lowValueField.getText());
+                    if (newMaxValue < newMinValue) {
+                        JOptionPane.showMessageDialog(null, "the maximum value must be greater than the minimum value");
+                    } else {
+                        if (alarmNotificator != null) {
+                            wiFi.removeObserver(alarmNotificator);
+                            alarmNotificator = null;
+                        }
 
-                    if (alarmNotificator != null) {
-                        wiFi.removeObserver(alarmNotificator);
-                        alarmNotificator = null;
+                        XYPlot plot = chart.getXYPlot();
+                        plot.clearRangeMarkers();
+
+                        Marker alarmMAXMarker = new ValueMarker(newMaxValue);
+                        Marker alarmMINMarker = new ValueMarker(newMinValue);
+                        alarmMAXMarker.setPaint(Color.BLUE);
+                        alarmMINMarker.setPaint(Color.BLUE);
+                        alarmMAXMarker.setStroke(new BasicStroke(2));
+                        alarmMINMarker.setStroke(new BasicStroke(2));
+                        plot.addRangeMarker(alarmMAXMarker);
+                        plot.addRangeMarker(alarmMINMarker);
+
+                        maxValue = newMaxValue;
+                        minValue = newMinValue;
+
+                        alarmNotificator = new AlarmNotificator(sensor, maxValue, minValue, SensorForm.this);
+                        wiFi.addObserver(alarmNotificator);
+
+                        alarmIsOn = true;
+
+                        highValueField.setText("");
+                        lowValueField.setText("");
                     }
-
-                    XYPlot plot = chart.getXYPlot();
-                    plot.clearRangeMarkers();
-
-                    Marker alarmMAXMarker = new ValueMarker(newMaxValue);
-                    Marker alarmMINMarker = new ValueMarker(newMinValue);
-                    alarmMAXMarker.setPaint(Color.BLUE);
-                    alarmMINMarker.setPaint(Color.BLUE);
-                    alarmMAXMarker.setStroke(new BasicStroke(2));
-                    alarmMINMarker.setStroke(new BasicStroke(2));
-                    plot.addRangeMarker(alarmMAXMarker);
-                    plot.addRangeMarker(alarmMINMarker);
-
-                    maxValue = newMaxValue;
-                    minValue = newMinValue;
-
-                    alarmNotificator = new AlarmNotificator(sensor, maxValue, minValue, SensorForm.this);
-                    wiFi.addObserver(alarmNotificator);
-
-                    alarmIsOn = true;
-
-                    highValueField.setText("");
-                    lowValueField.setText("");
                 }
             }
         });
@@ -151,14 +154,13 @@ public class SensorForm extends JPanel implements Observer{
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
+                try {
                     wiFi.addObserver(SensorForm.this);
                     wiFi.connect();
-                    isConnected=wiFi.isConnected();
-                }catch(Exception exception){
-                    JOptionPane.showMessageDialog(null,"Problems occurred while trying to set a connection to the sensor");
+                    isConnected = wiFi.isConnected();
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(null, "Problems occurred while trying to set a connection to the sensor");
                 }
-
             }
         });
 
@@ -166,7 +168,7 @@ public class SensorForm extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
                 wiFi.disconnect();
-                isConnected=wiFi.isConnected();
+                isConnected = wiFi.isConnected();
             }
         });
 
@@ -174,21 +176,18 @@ public class SensorForm extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(!detectedData.isEmpty()){
+                if (!detectedData.isEmpty()) {
                     myJDBC.setDBConnection();
-                    myJDBC.storeData(detectedData,sensor);
+                    myJDBC.storeData(detectedData, sensor);
                     myJDBC.closeDBConnection();
 
                     SensorFile sensorFile = new SensorFile();
                     sensorFile.createDirectory(sensor);
-                    StringBuilder stringBuilder=createStringBuilder(alarmIsOn,minValue,maxValue);
+                    StringBuilder stringBuilder = createStringBuilder(alarmIsOn, minValue, maxValue);
                     sensorFile.saveToFile(sensor, stringBuilder);
-
                 }
-
             }
         });
-
     }
 
     public StringBuilder createStringBuilder(boolean alarmIsOn, double minValue, double maxValue) {
@@ -264,23 +263,22 @@ public class SensorForm extends JPanel implements Observer{
     }
 
     public void update(SensorData sensorData) {
-        System.out.println("ricevuto update "+sensorData.getPh());
-        if(sensor.getType().equals("ph")){
-            detectedData.put(new Millisecond(),sensorData.getPh());
+        System.out.println("ricevuto update " + sensorData.getPh());
+        if (sensor.getType().equals("ph")) {
+            detectedData.put(new Millisecond(), sensorData.getPh());
             System.out.println(detectedData);
-        }else{
-            if(sensor.getType().equals("Temperature")){
-                detectedData.put(new Millisecond(),sensorData.getTemperature());
+        } else {
+            if (sensor.getType().equals("Temperature")) {
+                detectedData.put(new Millisecond(), sensorData.getTemperature());
                 System.out.println(detectedData);
-            }else{
-                detectedData.put(new Millisecond(),sensorData.getChlorine());
+            } else {
+                detectedData.put(new Millisecond(), sensorData.getChlorine());
                 System.out.println(detectedData);
             }
         }
 
-        RealTimeChartUpdater realTimeChartUpdater = new RealTimeChartUpdater(this.chartPanel, sensorData,sensor);
+        RealTimeChartUpdater realTimeChartUpdater = new RealTimeChartUpdater(this.chartPanel, sensorData, sensor);
         SwingUtilities.invokeLater(realTimeChartUpdater);
-
     }
 
     public void updateAlarms(String message) {
@@ -312,7 +310,7 @@ public class SensorForm extends JPanel implements Observer{
                         @Override
                         public void run() {
                             try {
-                                new EmailSender(sensor.getOperatorEmail()).sendEmail("Alarm detected!",message);
+                                new EmailSender(sensor.getOperatorEmail()).sendEmail("Alarm detected!", message);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
