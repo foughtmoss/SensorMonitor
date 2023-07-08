@@ -13,6 +13,14 @@ A simple desktop application for monitoring Wi-Fi sensors.
 * And others more...
  
 # Core Idea
+1) The application connects to the sensor;
+2) The sensor starts sending data to the application;
+3) The application interprets the data;
+4) The applicatin update the chart;
+5) The connection is closed;
+
+Operations 2,3,4 continue until operation 5 is performed
+
 ![flow drawio](https://github.com/foughtmoss/SensorMonitor/assets/136918608/e4ebd118-0044-4d4f-9c72-c506749fb419)
 
 # Screenshots
