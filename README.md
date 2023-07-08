@@ -14,7 +14,7 @@ A simple desktop application for monitoring Wi-Fi sensors.
  
 # Core Idea
 1) The application connects to the sensor;
-2) The sensor starts sending the data to tthe application;
+2) The sensor starts sending data to the application;
 3) The application interprets the data;
 4) The applicatin update the chart;
 5) The connection is closed;
