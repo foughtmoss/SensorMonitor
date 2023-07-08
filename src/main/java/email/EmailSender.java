@@ -22,6 +22,7 @@ import org.apache.commons.codec.binary.Base64;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,7 +50,7 @@ public class EmailSender {
 
     private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException {
         // Load client secrets.
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(EmailSender.class.getResourceAsStream("/insert_your_client_secret_here")));
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(EmailSender.class.getResourceAsStream("/client_secret_637703448706-92aqtuaam6qng11m9c2f67ilm024l44f.apps.googleusercontent.com.json")));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory, clientSecrets, Set.of(GmailScopes.GMAIL_SEND)).setDataStoreFactory(new FileDataStoreFactory(Paths.get("tokens").toFile())).setAccessType("offline").build();
@@ -86,6 +87,7 @@ public class EmailSender {
             GoogleJsonError error = e.getDetails();
             if (error.getCode() == 403) {
                 System.err.println("Unable to send message: " + e.getDetails());
+                JOptionPane.showMessageDialog(null,"Unable to send message");
             } else {
                 throw e;
             }
