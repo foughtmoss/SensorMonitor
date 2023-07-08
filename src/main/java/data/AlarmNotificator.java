@@ -7,9 +7,9 @@ import UI_operations.SensorForm;
  */
 
 public class AlarmNotificator implements Observer{
-    double maxValue;
-    double minValue;
-    Sensor sensor;
+    private double maxValue;
+    private double minValue;
+    private Sensor sensor;
     private SensorForm sensorForm;
 
     public AlarmNotificator(Sensor sensor, double maxValue, double minValue,SensorForm sensorForm) {

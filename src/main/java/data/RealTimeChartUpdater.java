@@ -10,7 +10,16 @@ import org.jfree.data.time.TimeSeriesCollection;
  * Update the real-time chart
  */
 
-public record RealTimeChartUpdater(ChartPanel chartPanel, SensorData sensorData, Sensor sensor) implements Runnable {
+public class RealTimeChartUpdater implements Runnable {
+    private ChartPanel chartPanel;
+    private SensorData sensorData;
+    private Sensor sensor;
+
+    public RealTimeChartUpdater(ChartPanel chartPanel, SensorData sensorData, Sensor sensor) {
+        this.chartPanel = chartPanel;
+        this.sensorData = sensorData;
+        this.sensor = sensor;
+    }
 
     @Override
     public void run() {
