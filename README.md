@@ -20,6 +20,7 @@ A simple desktop application for monitoring Wi-Fi sensors.
 5) The connection is closed;
 
 Operations 2,3,4 continue until operation 5 is performed
+
 ![flow drawio](https://github.com/foughtmoss/SensorMonitor/assets/136918608/e4ebd118-0044-4d4f-9c72-c506749fb419)
 
 # Screenshots
