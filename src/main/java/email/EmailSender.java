@@ -35,7 +35,7 @@ import java.util.Set;
  */
 
 public class EmailSender {
-    private static final String TEST_EMAIL = "sensormonitorprojectoop@gmail.com";
+    private static final String TEST_EMAIL = "testEmail";
     private final Gmail service;
     private final String operatorEmail;
 
@@ -45,12 +45,12 @@ public class EmailSender {
 
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory)).setApplicationName("My First Project").build();
+        service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory)).setApplicationName("projectName").build();
     }
 
     private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException {
         // Load client secrets.
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(EmailSender.class.getResourceAsStream("/client_secret_637703448706-92aqtuaam6qng11m9c2f67ilm024l44f.apps.googleusercontent.com.json")));
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(EmailSender.class.getResourceAsStream("/client_secret_")));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory, clientSecrets, Set.of(GmailScopes.GMAIL_SEND)).setDataStoreFactory(new FileDataStoreFactory(Paths.get("tokens").toFile())).setAccessType("offline").build();
