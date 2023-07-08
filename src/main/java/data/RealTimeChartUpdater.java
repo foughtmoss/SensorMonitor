@@ -10,27 +10,19 @@ import org.jfree.data.time.TimeSeriesCollection;
  * Update the real-time chart
  */
 
-public class RealTimeChartUpdater implements Runnable{
-    private ChartPanel chartPanel;
-    private SensorData sensorData;
-    private Sensor sensor;
+public record RealTimeChartUpdater(ChartPanel chartPanel, SensorData sensorData, Sensor sensor) implements Runnable {
 
-    public RealTimeChartUpdater(ChartPanel chartPanel, SensorData sensorData,Sensor sensor) {
-        this.chartPanel = chartPanel;
-        this.sensorData = sensorData;
-        this.sensor=sensor;
-    }
     @Override
     public void run() {
         XYPlot plot = (XYPlot) chartPanel.getChart().getPlot();
         TimeSeriesCollection dataset = (TimeSeriesCollection) plot.getDataset();
         TimeSeries series = dataset.getSeries(sensor.getType());
-        if(sensor.getType().equals("ph")){
+        if (sensor.getType().equals("ph")) {
             series.addOrUpdate(new Millisecond(), sensorData.getPh());
-        }else{
-            if(sensor.getType().equals("Temperature")){
+        } else {
+            if (sensor.getType().equals("Temperature")) {
                 series.addOrUpdate(new Millisecond(), sensorData.getTemperature());
-            }else{
+            } else {
                 series.addOrUpdate(new Millisecond(), sensorData.getChlorine());
             }
         }
