@@ -34,7 +34,7 @@ import java.util.Set;
  */
 
 public class EmailSender {
-    private static final String TEST_EMAIL = "sensormonitorprojectoop@gmail.com";
+    private static final String TEST_EMAIL = "testEmail";
     private final Gmail service;
     private final String operatorEmail;
 
@@ -44,7 +44,7 @@ public class EmailSender {
 
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory)).setApplicationName("My First Project").build();
+        service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory)).setApplicationName("projectName").build();
     }
 
     private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException {
