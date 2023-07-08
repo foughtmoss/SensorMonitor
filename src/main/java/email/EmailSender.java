@@ -35,7 +35,7 @@ import java.util.Set;
  */
 
 public class EmailSender {
-    private static final String TEST_EMAIL = "testEmail";
+    private static final String TEST_EMAIL = "sensormonitorprojectoop@gmail.com";
     private final Gmail service;
     private final String operatorEmail;
 
@@ -45,7 +45,7 @@ public class EmailSender {
 
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory)).setApplicationName("projectName").build();
+        service = new Gmail.Builder(httpTransport, jsonFactory, getCredentials(httpTransport, jsonFactory)).setApplicationName("My First Project").build();
     }
 
     private static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException {
@@ -87,7 +87,7 @@ public class EmailSender {
             GoogleJsonError error = e.getDetails();
             if (error.getCode() == 403) {
                 System.err.println("Unable to send message: " + e.getDetails());
-                JOptionPane.showMessageDialog(null,"Unable to send message");
+                JOptionPane.showMessageDialog(null, "Unable to send message");
             } else {
                 throw e;
             }
