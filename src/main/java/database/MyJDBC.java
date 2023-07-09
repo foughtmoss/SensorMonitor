@@ -130,7 +130,6 @@ public class MyJDBC {
     public void closeDBConnection() {
         try {
             connection.close();
-            System.out.println("connection closed");
         } catch (SQLException e) {
             e.printStackTrace();
         }
