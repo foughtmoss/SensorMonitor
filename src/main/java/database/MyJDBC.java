@@ -70,15 +70,12 @@ public class MyJDBC {
                 Millisecond millisecond = new Millisecond(timestamp);
                 double dataValue = resultSet.getDouble("dataValue");
 
-                // Formattazione del millisecondo
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
                 String formattedMillisecond = dateFormat.format(millisecond.getStart());
 
-                // Utilizzare i dati come richiesto
                 System.out.println("Millisecond: " + formattedMillisecond);
                 System.out.println("Data Value: " + dataValue);
 
-                // Aggiungi alla mappa solo se il millisecondo è maggiore o uguale a quello del file
                 if (formattedMillisecond.compareTo(fileMillisecond) >= 0) {
                     map.put(formattedMillisecond, dataValue);
                 }
@@ -207,17 +204,14 @@ public class MyJDBC {
                 Millisecond millisecond = entry.getKey();
                 Double dataValue = entry.getValue();
 
-                // Convert Millisecond to java.sql.Timestamp
                 long timeInMillis = millisecond.getFirstMillisecond();
                 Timestamp timestamp = new Timestamp(timeInMillis);
 
-                // Set the parameter values
                 preparedStatement.setString(1, ipAddress);
                 preparedStatement.setDate(2, new Date(timestamp.getTime()));
                 preparedStatement.setTimestamp(3, timestamp);
                 preparedStatement.setDouble(4, dataValue);
 
-                // Execute the query
                 preparedStatement.executeUpdate();
             }
 
