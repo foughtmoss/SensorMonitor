@@ -38,8 +38,7 @@ WiFiClient client = server.available();
   if (client) {
     Serial.println("Client connected");
     while (client.connected()) {
-      // Leggi i dati dal sensore del pH e formatta come JSON
-      double phValue; // Esempio di valore del pH
+      double phValue; 
       randomSeed(millis());
       phValue = random(0,15);
       
@@ -49,7 +48,7 @@ WiFiClient client = server.available();
       client.println(jsonData);
       client.flush();
       
-      delay(1000); // Intervallo di lettura dei dati (1 secondo)
+      delay(1000);
     }
     Serial.println("Client disconnected");
   }
