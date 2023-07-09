@@ -16,7 +16,7 @@ A simple desktop application for monitoring Wi-Fi sensors.
 1) The application connects to the sensor;
 2) The sensor starts sending data to the application;
 3) The application interprets the data;
-4) The applicatin update the chart;
+4) The application update the chart;
 5) The connection is closed;
 
 Operations 2,3,4 continue until operation 5 is performed
