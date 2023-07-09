@@ -1,5 +1,5 @@
 # Sensor_Monitor
-<img src="https://github.com/foughtmoss/SensorMonitor/assets/136918608/02f2bd83-c5b0-486f-89f0-e89b7bac6058" alt="App Icon" width="200" height="200">
+<img src="https://github.com/foughtmoss/SensorMonitor/assets/136918608/02f2bd83-c5b0-486f-89f0-e89b7bac6058" alt="App Icon" width="100" height="100">
 
 A simple desktop application for monitoring Wi-Fi sensors.
 
