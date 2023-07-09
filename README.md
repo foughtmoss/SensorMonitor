@@ -1,5 +1,5 @@
 # Sensor_Monitor
-<img src="https://github.com/foughtmoss/SensorMonitor/assets/136918608/02f2bd83-c5b0-486f-89f0-e89b7bac6058" alt="App Icon" width="200" height="200">
+<img src="https://github.com/foughtmoss/SensorMonitor/assets/136918608/02f2bd83-c5b0-486f-89f0-e89b7bac6058" alt="App Icon" width="100" height="100">
 
 A simple desktop application for monitoring Wi-Fi sensors.
 
@@ -50,6 +50,11 @@ Analyze previous charts selecting the detection date and the type of chart.
 Add new sensors and save their details in the database. Currently you can select one of three different type of sensors (ph sensor, Temperature sensor, Chlorine sensor).
 
 ![addSensor](https://github.com/foughtmoss/SensorMonitor/assets/136918608/067c917d-2494-4315-94eb-37829310ab01)
+
+# Suorces
+* Java API
+* GMail API
+* JFreeChart API
 
 # License
 This software is licensed under MIT License.
