@@ -18,8 +18,6 @@ import org.jfree.data.time.TimeSeriesCollection;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +44,7 @@ public class SensorForm extends JPanel implements Observer {
     private final JButton setAlarmButton;
     private Sensor sensor;
     private final WiFi wiFi;
-    private AlarmNotificator alarmNotificator;
+    private AlarmNotifier alarmNotificator;
     private final JPanel messagePanel;
     private final HashMap<Millisecond, Double> detectedData;
     private final MyJDBC myJDBC;
@@ -137,7 +135,7 @@ public class SensorForm extends JPanel implements Observer {
                     maxValue = newMaxValue;
                     minValue = newMinValue;
 
-                    alarmNotificator = new AlarmNotificator(sensor, maxValue, minValue, SensorForm.this);
+                    alarmNotificator = new AlarmNotifier(sensor, maxValue, minValue, SensorForm.this);
                     wiFi.addObserver(alarmNotificator);
 
                     alarmIsOn = true;

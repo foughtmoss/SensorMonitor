@@ -6,13 +6,13 @@ import UI_operations.SensorForm;
  * Create alarm messages
  */
 
-public class AlarmNotificator implements Observer{
+public class AlarmNotifier implements Observer{
     private double maxValue;
     private double minValue;
     private Sensor sensor;
     private SensorForm sensorForm;
 
-    public AlarmNotificator(Sensor sensor, double maxValue, double minValue,SensorForm sensorForm) {
+    public AlarmNotifier(Sensor sensor, double maxValue, double minValue, SensorForm sensorForm) {
         this.sensor=sensor;
         this.maxValue = maxValue;
         this.minValue = minValue;
