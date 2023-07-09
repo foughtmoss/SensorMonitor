@@ -8,7 +8,7 @@ A simple desktop application for monitoring Wi-Fi sensors.
 * Select a sensor and establish a connection via the application
 * Examine the real-time chart and set up new alarms
 * Contact automatically the designated operator via email
-* Save detected datas and check them later via line charts, bar charts or .csv files
+* Save detected data and check them later via line charts, bar charts or .csv files
 * Operate on an inventory in tabular form
 * And others more...
  
