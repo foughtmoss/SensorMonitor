@@ -31,8 +31,6 @@ import java.util.LinkedHashMap;
  */
 
 public class SensorForm extends JPanel implements Observer {
-    double minValue;
-    double maxValue;
     private final JButton connectButton;
     private final JButton disconnectButton;
     private final JButton saveButton;
@@ -42,12 +40,14 @@ public class SensorForm extends JPanel implements Observer {
     private final JLabel lowValueLabel;
     private final JTextField lowValueField;
     private final JButton setAlarmButton;
-    private Sensor sensor;
     private final WiFi wiFi;
-    private AlarmNotifier alarmNotificator;
     private final JPanel messagePanel;
     private final HashMap<Millisecond, Double> detectedData;
     private final MyJDBC myJDBC;
+    double minValue;
+    double maxValue;
+    private Sensor sensor;
+    private AlarmNotifier alarmNotificator;
     private boolean alarmIsOn = false;
     private boolean isConnected = false;
 
@@ -249,17 +249,13 @@ public class SensorForm extends JPanel implements Observer {
     }
 
     public void update(SensorData sensorData) {
-        System.out.println("ricevuto update " + sensorData.getPh());
         if (sensor.getType().equals("ph")) {
             detectedData.put(new Millisecond(), sensorData.getPh());
-            System.out.println(detectedData);
         } else {
             if (sensor.getType().equals("Temperature")) {
                 detectedData.put(new Millisecond(), sensorData.getTemperature());
-                System.out.println(detectedData);
             } else {
                 detectedData.put(new Millisecond(), sensorData.getChlorine());
-                System.out.println(detectedData);
             }
         }
 
