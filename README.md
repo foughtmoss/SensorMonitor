@@ -51,6 +51,11 @@ Add new sensors and save their details in the database. Currently you can select
 
 ![addSensor](https://github.com/foughtmoss/SensorMonitor/assets/136918608/067c917d-2494-4315-94eb-37829310ab01)
 
+# Suorces
+* Java API
+* GMail API
+* JFreeChart API
+
 # License
 This software is licensed under MIT License.
 
